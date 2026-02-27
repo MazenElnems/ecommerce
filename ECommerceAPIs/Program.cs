@@ -32,6 +32,4 @@ app.UseAuthorization();
 app.MapIdentityApi<AppUser>();
 app.MapControllers();
 
-app.MapGet("/", () => "ECommerceAPIs is running.");
-
 app.Run();
