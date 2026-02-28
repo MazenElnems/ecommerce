@@ -29,7 +29,9 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapIdentityApi<AppUser>();
+app.MapIdentityApi<AppUser>()
+    .WithTags("Auth");
+
 app.MapControllers();
 
 app.Run();

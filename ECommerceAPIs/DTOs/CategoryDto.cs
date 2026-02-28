@@ -1,4 +1,4 @@
-﻿namespace DEPI_AngApi.ECommerceAPIs.DTOs
+﻿namespace ECommerceAPIs.DTOs
 {
     public class CategoryDto
     {

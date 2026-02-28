@@ -1,10 +1,9 @@
-﻿using DEPI_AngApi.ECommerceAPIs.DTOs;
-using ECommerceAPIs.Data;
-using Microsoft.AspNetCore.Http;
+﻿using ECommerceAPIs.Data;
+using ECommerceAPIs.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace DEPI_AngApi.ECommerceAPIs.Controllers
+namespace ECommerceAPIs.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
