@@ -31,6 +31,9 @@ public class OrdersController : ControllerBase
             return BadRequest("Invalid user id.");
         }
 
+        
+        
+
         var mergedItems = request.Items
             .GroupBy(i => i.ProductId)
             .Select(g => new { ProductId = g.Key, Quantity = g.Sum(x => x.Quantity) })
