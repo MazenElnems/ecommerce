@@ -1,6 +1,7 @@
 using ECommerceAPIs.Data;
 using ECommerceAPIs.Models;
 using ECommerceAPIs.Models.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,6 +19,7 @@ public class OrdersController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize]
     public async Task<IActionResult> Create([FromBody] CreateOrderRequest request)
     {
         if (!ModelState.IsValid)
@@ -30,9 +32,6 @@ public class OrdersController : ControllerBase
         {
             return BadRequest("Invalid user id.");
         }
-
-        
-        
 
         var mergedItems = request.Items
             .GroupBy(i => i.ProductId)
