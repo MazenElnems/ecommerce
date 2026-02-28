@@ -1,4 +1,4 @@
-﻿using ECommerceAPIs.Data;
+using ECommerceAPIs.Data;
 using ECommerceAPIs.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -24,7 +24,8 @@ namespace ECommerceAPIs.Controllers
                 .Select(c => new CategoryDto
                 {
                     Id = c.Id,
-                    Name = c.Name
+                    Name = c.Name,
+                    Image = c.Image
                 })
                 .ToListAsync();
 
@@ -40,7 +41,8 @@ namespace ECommerceAPIs.Controllers
                 .Select(c => new CategoryDto
                 {
                     Id = c.Id,
-                    Name = c.Name
+                    Name = c.Name,
+                    Image = c.Image
                 })
                 .FirstOrDefaultAsync();
 
