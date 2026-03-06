@@ -1,0 +1,393 @@
+/* =========================
+   FONTS
+========================= */
+
+@font-face {
+  font-family: "poppins";
+  src: url(../fonts/Poppins-Regular.ttf);
+}
+
+@font-face {
+  font-family: "poppins";
+  src: url(../fonts/Poppins-Bold.ttf);
+  font-weight: bold;
+}
+
+/* =========================
+   GLOBAL
+========================= */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "poppins", sans-serif;
+  background: #f6f6f6;
+  color: #222;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.top-banner {
+  background: #000;
+  color: #fff;
+  text-align: center;
+  padding: 3px 0;
+  font-size: 14px;
+  position: relative;
+  align-items: center;
+
+}
+
+.top-banner a {
+  color: #fff;
+  font-weight: bold;
+  margin-left: 8px;
+}
+
+.lang-selector {
+  position: absolute;
+  right: 5%;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+/* =========================
+   PRODUCTS SECTION
+========================= */
+
+.products-section {
+  max-width: 1200px;
+  margin: auto;
+  padding: 40px 20px;
+}
+
+.products-count {
+  font-size: 14px;
+  margin-bottom: 20px;
+  color: #666;
+}
+
+/* =========================
+   GRID
+========================= */
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 25px;
+  align-items: stretch;
+}
+
+/* =========================
+   PRODUCT CARD
+========================= */
+
+.shop-card {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all .25s ease;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.shop-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* =========================
+   IMAGE AREA
+========================= */
+
+.shop-img {
+  position: relative;
+  background: #f9f9f9;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+}
+
+.shop-img img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  transition: transform .25s ease;
+}
+
+.shop-card:hover img {
+  transform: scale(1.05);
+}
+
+/* =========================
+   BADGE
+========================= */
+
+.discount-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #e63946;
+  color: white;
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+
+/* =========================
+   WISHLIST
+========================= */
+
+.wishlist-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: white;
+  border: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+  transition: all .2s;
+}
+
+.wishlist-btn:hover {
+  background: #f2f2f2;
+}
+
+/* =========================
+   CARD BODY
+========================= */
+
+.shop-body {
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.shop-body h4 {
+  font-size: 15px;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.price {
+  color: #e63946;
+  font-weight: bold;
+  font-size: 15px;
+  margin-bottom: 8px;
+}
+
+.shop-img {
+  position: relative;
+  background: #f9f9f9;
+  height: 220px;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.shop-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.products-header {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 15px;
+}
+
+.pagination-wrap {
+  display: flex;
+  justify-content: center;
+}
+
+.pagination .page-link {
+  color: #000;
+}
+
+.pagination .active .page-link {
+  background: black;
+  border-color: black;
+}
+
+/* =========================
+   STARS
+========================= */
+
+.stars {
+  color: #f4b400;
+  font-size: 13px;
+  margin-bottom: 14px;
+}
+
+/* =========================
+   BUTTON
+========================= */
+
+.btn-add {
+  margin-top: auto;
+  width: 100%;
+  padding: 11px;
+  background: black;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: .3s;
+}
+
+.btn-add:hover {
+  background: #333;
+}
+
+/* =========================
+   PAGINATION
+========================= */
+
+.pagination-wrap {
+  margin-top: 40px;
+  text-align: center;
+}
+
+/* =========================
+   EMPTY STATE
+========================= */
+
+.empty-state {
+  text-align: center;
+  padding: 60px;
+  color: #777;
+}
+
+.empty-state i {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+
+.main-footer {
+  background: #000;
+  color: #fff;
+  padding: 80px 5% 20px;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 30px;
+}
+
+.footer-col ul {
+  list-style: none;
+  margin-top: 20px;
+}
+
+.footer-col li {
+  margin-bottom: 15px;
+  color: #F5F5F5;
+}
+
+.subscribe-input {
+  border: 1.5px solid #fff;
+  padding: 8px;
+  display: flex;
+  margin-top: 15px;
+}
+
+.subscribe-input input {
+  background: transparent;
+  border: none;
+  color: #fff;
+  width: 100%;
+  outline: none;
+}
+
+.app-download-area {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.qr-code {
+  width: 80px;
+  height: 80px;
+  display: block;
+}
+
+.store-imgs {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.store-imgs img {
+  width: 110px;
+  height: 40px;
+  display: block;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.social-links {
+  margin-top: 20px;
+  display: flex;
+  gap: 24px;
+  font-size: 18px;
+}
+
+.social-links i {
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.social-links i:hover {
+  color: #DB4444;
+}
+
+.copyright {
+  text-align: center;
+  border-top: 1px solid #333;
+  margin-top: 60px;
+  padding-top: 20px;
+  color: #555;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:768px) {
+
+  .products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+
+  .shop-img {
+    height: 180px;
+  }
+
+}
