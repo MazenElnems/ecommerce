@@ -8,15 +8,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
 builder.Services.AddAuthentication();
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowFrontend",
-        policy =>
+    options.AddDefaultPolicy(policy =>
         {
-            policy.WithOrigins("http://127.0.0.1:5500")
+            policy.WithOrigins("*")
                   .AllowAnyHeader()
                   .AllowAnyMethod();
         });
@@ -46,7 +44,7 @@ if (app.Environment.IsDevelopment())
 }
 
 // يجب وضع UseCors قبل UseAuthorization
-app.UseCors("AllowFrontend");
+app.UseCors();
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
