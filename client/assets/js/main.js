@@ -4,8 +4,8 @@
 // Basic Config
 // =========================
 const API_BASE_URL = "https://ecommerce-depi.runasp.net";
-const BEST_COUNT = 8;
-const EXPLORE_COUNT = 16;
+const BEST_COUNT = 4;
+const EXPLORE_COUNT = 4;
 
 // =========================
 // Global Variables
@@ -248,14 +248,7 @@ function addEventHandlers() {
     }
   });
 
-  allProductsBtnEl.addEventListener("click", function (event) {
-    event.preventDefault();
-    renderProductCards(exploreGridEl, shownProducts, false);
-    window.scrollTo({
-      top: exploreGridEl.offsetTop - 100,
-      behavior: "smooth",
-    });
-  });
+  
 
   mobileMenuBtnEl.addEventListener("click", function () {
     mainNavEl.classList.toggle("show");
