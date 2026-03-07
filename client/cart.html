@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Cart</title>
+    <link rel="stylesheet" href="assets/css/cart.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- TOP BAR -->
+
+    <div class="top-bar">
+        <p>Summer Sale For All Swim Suits And Free Express Delivery - OFF 50%! <a href="#">ShopNow</a></p>
+
+        <select>
+            <option>English</option>
+        </select>
+    </div>
+
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+        <h2 class="logo">Exclusive</h2>
+
+        <ul class="nav-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Sign Up</a></li>
+        </ul>
+
+        <!-- <div class="nav-actions">
+
+            <input type="text" placeholder="What are you looking for?"> 
+
+            <i class="fa-regular fa-heart"></i>
+            <i class="fa-solid fa-cart-shopping"></i>
+            <i class="fa-regular fa-user"></i>
+
+        </div> -->
+
+        <div class="nav-actions">
+            <div class="cart-wrapper">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span class="cart-count" id="cart-count">0</span>
+            </div>
+            <i class="fa-regular fa-user"></i>
+        </div>
+
+    </nav>
+
+
+    <!-- MAIN CONTENT -->
+
+    <div class="container">
+
+
+
+
+        <div class="cart-wrapper">
+
+            <!-- CART TABLE -->
+
+            <div class="cart-table">
+
+                <div class="cart-header">
+                    <span>Product</span>
+                    <span>Price</span>
+                    <span>Quantity</span>
+                    <span>Subtotal</span>
+                </div>
+
+                <div id="cart-items"></div>
+
+            </div>
+
+
+            <!-- CART TOTAL -->
+
+            <div class="cart-total">
+
+                <h3>Cart Total</h3>
+
+                <div class="row">
+                    <span>Subtotal:</span>
+                    <span id="subtotal">$0</span>
+                </div>
+
+                <div class="row">
+                    <span>Shipping:</span>
+                    <span>Free</span>
+                </div>
+
+                <div class="row">
+                    <span>Total:</span>
+                    <span id="total">$0</span>
+                </div>
+
+                <button class="checkout">
+                    Proceeds to checkout
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- FOOTER -->
+
+    <footer class="footer">
+
+        <div class="footer-container">
+
+            <div class="footer-col">
+
+                <h3>Exclusive</h3>
+
+                <p>Subscribe</p>
+
+                <p>Get 10% off your first order</p>
+
+                <div class="subscribe">
+                    <input type="email" placeholder="Enter your email">
+                    <button><i class="fa-solid fa-paper-plane"></i></button>
+                </div>
+
+            </div>
+
+
+            <div class="footer-col">
+
+                <h3>Support</h3>
+
+                <p>111 Bijoy sarani, Dhaka,<br>DH 1515, Bangladesh.</p>
+
+                <p>exclusive@gmail.com</p>
+
+                <p>+88015-88888-9999</p>
+
+            </div>
+
+
+            <div class="footer-col">
+
+                <h3>Account</h3>
+
+                <p>My Account</p>
+                <p>Login / Register</p>
+                <p>Cart</p>
+                <p>Wishlist</p>
+                <p>Shop</p>
+
+            </div>
+
+
+            <div class="footer-col">
+
+                <h3>Quick Link</h3>
+
+                <p>Privacy Policy</p>
+                <p>Terms Of Use</p>
+                <p>FAQ</p>
+                <p>Contact</p>
+
+            </div>
+
+
+            <!-- <div class="footer-col">
+
+                <h3>Download App</h3>
+
+                <p>Save $3 with App New User Only</p>
+
+                <img src="assets/images/qrcode.png" width="80">
+
+            </div> -->
+
+        </div>
+
+        <p class="copyright">
+            © Copyright Rimel 2022. All right reserved
+        </p>
+
+    </footer>
+
+
+    <script src="assets/js/cart.js"></script>
+
+</body>
+
+</html>
