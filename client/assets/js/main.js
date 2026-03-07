@@ -177,21 +177,20 @@ function renderAllProductSections(products) {
 }
 
 function addToCart(productId) {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  let product = cart.find((p) => p.id === productId);
 
-    let product = cart.find(p => p.id === productId);
+  if (product) {
+    product.qty++;
+  } else {
+    cart.push({
+      id: productId,
+      qty: 1,
+    });
+  }
 
-    if (product) {
-        product.qty++;
-    } else {
-        cart.push({
-            id: productId,
-            qty: 1
-        });
-    }
-
-    localStorage.setItem("cart", JSON.stringify(cart));
+  localStorage.setItem("cart", JSON.stringify(cart));
 }
 
 function renderProductCards(container, products, showDiscount) {
@@ -222,7 +221,7 @@ function renderProductCards(container, products, showDiscount) {
                     </div>
                     <img src="${imageUrl}" alt="${product.name}" />
                 </div>
-                <button class="add-btn">Add To Cart</button>
+                <button class="add-btn" onclick="addToCart(${product.id})">Add To Cart</button>
                 <div class="product-info">
                     <h3>${product.name}</h3>
                     <div class="price-row">

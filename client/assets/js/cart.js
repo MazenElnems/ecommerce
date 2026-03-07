@@ -1,8 +1,3 @@
-
-
-
-
-
 // function addToCart(productId) {
 
 //     let cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -22,24 +17,20 @@
 // }
 
 function getCart() {
-    return JSON.parse(localStorage.getItem("cart")) || [];
+  return JSON.parse(localStorage.getItem("cart")) || [];
 }
 
 function removeFromCart(productId) {
+  let cart = getCart();
 
-    let cart = getCart();
+  cart = cart.filter((p) => p.id !== productId);
 
-    cart = cart.filter(p => p.id !== productId);
-
-    localStorage.setItem("cart", JSON.stringify(cart));
+  localStorage.setItem("cart", JSON.stringify(cart));
 }
 
 function clearCart() {
-    localStorage.removeItem("cart");
+  localStorage.removeItem("cart");
 }
-
-
-
 
 /* Render Cart */
 
@@ -47,15 +38,16 @@ const cartContainer = document.getElementById("cart-items");
 
 let cart = getCart();
 
-cart.forEach(async itemData => {
+cart.forEach(async (itemData) => {
+  let response = await fetch(
+    `https://ecommerce-depi.runasp.net/api/Product/${itemData.id}`,
+  );
+  let product = await response.json();
 
-    let response = await fetch(`https://ecommerce-depi.runasp.net/api/Product/${itemData.id}`);
-    let product = await response.json();
+  let item = document.createElement("div");
+  item.className = "cart-item";
 
-    let item = document.createElement("div");
-    item.className = "cart-item";
-
-    item.innerHTML = `
+  item.innerHTML = `
         <div class="product">
             <img src="${product.image}" alt="">
             <p>${product.name}</p>
@@ -74,88 +66,86 @@ cart.forEach(async itemData => {
         </div>
     `;
 
-    cartContainer.appendChild(item);
+  cartContainer.appendChild(item);
 
+  const qtyInput = item.querySelector(".qty-input");
+  const subtotalDiv = item.querySelector(".subtotal");
+  const removeBtn = item.querySelector(".remove-btn");
 
-    const qtyInput = item.querySelector(".qty-input");
-    const subtotalDiv = item.querySelector(".subtotal");
-    const removeBtn = item.querySelector(".remove-btn");
+  /* Quantity Change */
 
+  qtyInput.addEventListener("input", () => {
+    let qty = parseInt(qtyInput.value) || 1;
 
-    /* Quantity Change */
+    let subtotal = (product.price * qty).toFixed(2);
 
-    qtyInput.addEventListener("input", () => {
+    subtotalDiv.textContent = `$${subtotal}`;
 
-        let qty = parseInt(qtyInput.value) || 1;
+    let cart = getCart();
 
-        let subtotal = (product.price * qty).toFixed(2);
+    let productInCart = cart.find((p) => p.id === itemData.id);
 
-        subtotalDiv.textContent = `$${subtotal}`;
+    if (productInCart) {
+      productInCart.qty = qty;
+    }
 
-        let cart = getCart();
+    localStorage.setItem("cart", JSON.stringify(cart));
 
-        let productInCart = cart.find(p => p.id === itemData.id);
+    updateCartTotal();
+  });
 
-        if (productInCart) {
-            productInCart.qty = qty;
-        }
+  /* Remove Button */
 
-        localStorage.setItem("cart", JSON.stringify(cart));
+  removeBtn.addEventListener("click", () => {
+    removeFromCart(itemData.id);
 
-        updateCartTotal();
-
-    });
-
-
-    /* Remove Button */
-
-    removeBtn.addEventListener("click", () => {
-
-        removeFromCart(itemData.id);
-
-        item.remove();
-
-        updateCartTotal();
-        updateCartCount();
-
-
-    });
-
+    item.remove();
 
     updateCartTotal();
     updateCartCount();
+  });
 
+  updateCartTotal();
+  updateCartCount();
 });
-
 
 /* Update Cart Total */
 
 function updateCartTotal() {
+  let subtotalElements = document.querySelectorAll(".cart-item .subtotal");
 
-    let subtotalElements = document.querySelectorAll(".cart-item .subtotal");
+  let subtotal = 0;
 
-    let subtotal = 0;
+  subtotalElements.forEach((el) => {
+    subtotal += parseFloat(el.textContent.replace("$", ""));
+  });
 
-    subtotalElements.forEach(el => {
+  document.getElementById("subtotal").textContent = `$${subtotal.toFixed(2)}`;
 
-        subtotal += parseFloat(el.textContent.replace("$", ""));
-
-    });
-
-    document.getElementById("subtotal").textContent = `$${subtotal.toFixed(2)}`;
-
-    document.getElementById("total").textContent = `$${subtotal.toFixed(2)}`;
-    
+  document.getElementById("total").textContent = `$${subtotal.toFixed(2)}`;
 }
-
-
 
 let cartcount = document.querySelector(".cart-count");
 function updateCartCount() {
+  let cart = getCart();
+  let count = cart.length;
 
-    let cart = getCart();
-    let count = cart.length;
-
-    cartcount.textContent = count;
+  cartcount.textContent = count;
 }
 
+function addToCart(productId) {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  let product = cart.find((p) => p.id === productId);
+
+  if (product) {
+    product.qty++;
+  } else {
+    cart.push({
+      id: productId,
+      qty: 1,
+    });
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+}

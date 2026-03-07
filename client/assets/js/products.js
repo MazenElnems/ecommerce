@@ -105,7 +105,7 @@ function renderProducts() {
         <h4>${product.name}</h4>
         <p class="price">${product.price} EGP</p>
         <div class="stars">${stars}</div>
-        <button class="btn-add">Add To Cart</button>
+        <button class="btn-add" onclick="addToCart(${product.id})">Add To Cart</button>
       </div>
     `;
 
