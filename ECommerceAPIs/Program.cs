@@ -8,6 +8,17 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// إعداد CORS بسياسة مخصصة للفرونتند
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend",
+        policy =>
+        {
+            policy.WithOrigins("http://127.0.0.1:5500")
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -18,6 +29,7 @@ builder.Services
 builder.Services.AddAuthorization();
 builder.Services.AddScoped<DbInitializer>();
 
+<<<<<<< HEAD
 // 🔥🔥🔥 إضافة CORS هنا
 builder.Services.AddCors(options =>
 {
@@ -30,6 +42,8 @@ builder.Services.AddCors(options =>
         });
 });
 
+=======
+>>>>>>> 4fae26ea7e86678120dccb2054859cae41702919
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -44,9 +58,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// 🔥 مهم جدًا نحط UseCors قبل Authorization
+// يجب وضع UseCors قبل UseAuthorization
 app.UseCors("AllowFrontend");
-
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
