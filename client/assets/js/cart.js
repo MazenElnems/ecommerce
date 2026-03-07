@@ -1,209 +1,25 @@
+
+
+
+
+
 // function addToCart(productId) {
 
-//     let cart = localStorage.getItem("cart");
+//     let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-//     if (cart) {
-//         cart = JSON.parse(cart);
+//     let product = cart.find(p => p.id === productId);
+
+//     if (product) {
+//         product.qty++;
 //     } else {
-//         cart = [];
-//     }
-
-//     cart.push(productId);
-
-//     localStorage.setItem("cart", JSON.stringify(cart));
-// }
-
-// function getCart() {
-//     let cart = localStorage.getItem("cart");
-
-//     if (cart) {
-//         return JSON.parse(cart);
-//     }
-//     return [];
-// }
-
-// function removeFromCart(productId) {
-
-//     let cart = getCart();
-
-//     cart = cart.filter(id => id !== productId);
-
-//     localStorage.setItem("cart", JSON.stringify(cart));
-// }
-
-// function clearCart() {
-//     localStorage.removeItem("cart");
-// }
-
-// clearCart();
-
-// addToCart(1);
-// addToCart(2);
-// addToCart(3);
-
-
-
-
-
-
-
-
-
-// const cartContainer = document.getElementById("cart-items");
-
-// let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-// cart.forEach(id => {
-
-//     fetch(`https://ecommerce-depi.runasp.net/api/Product/${id}`)
-//     .then(res => res.json())
-//     .then(product => {
-
-//         let item = document.createElement("div");
-//         item.className = "cart-item";
-
-//         item.innerHTML = `
-//             <div class="product">
-//                 <img src="${product.image}" alt="">
-//                 <p>${product.name}</p>
-//             </div>
-
-//             <div>$${product.price}</div>
-
-//             <div>
-//                 <input type="number" value="1" min="1">
-//             </div>
-
-//             <div>$${product.price}</div>
-//         `;
-
-//         cartContainer.appendChild(item);
-
-//     });
-
-// });
-
-
-
-
-
-
-
-
-
-
-// function addToCart(productId) { 
-//     let cart = localStorage.getItem("cart"); 
-//     if (cart) { 
-//         cart = JSON.parse(cart); 
-//     } else { 
-//         cart = []; 
-//     } 
-//     cart.push(productId); 
-//     localStorage.setItem("cart", JSON.stringify(cart)); 
-// } 
-
-// function getCart() { 
-//     let cart = localStorage.getItem("cart"); 
-//     return cart ? JSON.parse(cart) : []; 
-// } 
-
-// function removeFromCart(productId) { 
-//     let cart = getCart(); 
-//     cart = cart.filter(id => id !== productId); 
-//     localStorage.setItem("cart", JSON.stringify(cart)); 
-// } 
-
-// function clearCart() { 
-//     localStorage.removeItem("cart"); 
-// } 
-
-// // Example setup
-// clearCart(); 
-// addToCart(1); 
-// addToCart(2); 
-// addToCart(3); 
-
-// const cartContainer = document.getElementById("cart-items"); 
-// let cart = getCart(); 
-
-// // Keep track of products for subtotal calculation
-// let productsInCart = [];
-
-// cart.forEach(async id => { 
-//     let response = await fetch(`https://ecommerce-depi.runasp.net/api/Product/${id}`);
-//     let product = await response.json();
-
-
-//     productsInCart.push(product);
-
-//         let item = document.createElement("div"); 
-//         item.className = "cart-item"; 
-
-//         item.innerHTML = ` 
-//             <div class="product"> 
-//                 <img src="${product.image}" alt=""> 
-//                 <p>${product.name}</p> 
-//             </div> 
-
-//             <div class="price">$${product.price}</div> 
-
-//             <div> 
-//                 <input type="number" value="1" min="1" class="qty-input"> 
-//             </div> 
-
-//             <div class="subtotal">$${product.price}</div> 
-//         `; 
-
-//         cartContainer.appendChild(item); 
-
-//         // Add event listener to quantity input
-//         const qtyInput = item.querySelector(".qty-input");
-//         const subtotalDiv = item.querySelector(".subtotal");
-
-//         qtyInput.addEventListener("input", () => {
-//             let qty = parseInt(qtyInput.value) || 1;
-//             let subtotal = (product.price * qty).toFixed(2);
-//             subtotalDiv.textContent = `$${subtotal}`;
-//             updateCartTotal();
+//         cart.push({
+//             id: productId,
+//             qty: 1
 //         });
+//     }
 
-//         updateCartTotal();
-    
-    
-// }); 
-
-// // Function to update the overall cart total
-// function updateCartTotal() {
-//     let subtotalElements = document.querySelectorAll(".cart-item .subtotal");
-//     let subtotal = 0;
-//     subtotalElements.forEach(el => {
-//         subtotal += parseFloat(el.textContent.replace("$",""));
-//     });
-//     document.getElementById("subtotal").textContent = `$${subtotal.toFixed(2)}`;
-//     document.getElementById("total").textContent = `$${subtotal.toFixed(2)}`; // Shipping is free
+//     localStorage.setItem("cart", JSON.stringify(cart));
 // }
-
-
-
-
-function addToCart(productId) {
-
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-    let product = cart.find(p => p.id === productId);
-
-    if (product) {
-        product.qty++;
-    } else {
-        cart.push({
-            id: productId,
-            qty: 1
-        });
-    }
-
-    localStorage.setItem("cart", JSON.stringify(cart));
-}
 
 function getCart() {
     return JSON.parse(localStorage.getItem("cart")) || [];
@@ -221,10 +37,6 @@ function removeFromCart(productId) {
 function clearCart() {
     localStorage.removeItem("cart");
 }
-
-addToCart(1);
-addToCart(2);
-addToCart(3);
 
 
 
@@ -346,3 +158,4 @@ function updateCartCount() {
 
     cartcount.textContent = count;
 }
+
