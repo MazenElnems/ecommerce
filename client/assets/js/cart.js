@@ -92,6 +92,7 @@ cart.forEach(async (itemData) => {
     localStorage.setItem("cart", JSON.stringify(cart));
 
     updateCartTotal();
+    updateCartCount();
   });
 
   /* Remove Button */
@@ -128,9 +129,15 @@ function updateCartTotal() {
 let cartcount = document.querySelector(".cart-count");
 function updateCartCount() {
   let cart = getCart();
-  let count = cart.length;
+  let count = 0;
 
-  cartcount.textContent = count;
+  cart.forEach((item) => {
+    count += Number(item.qty) || 0;
+  });
+
+  if (cartcount) {
+    cartcount.textContent = count;
+  }
 }
 
 function addToCart(productId) {

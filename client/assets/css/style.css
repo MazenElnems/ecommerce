@@ -110,7 +110,33 @@
 .icon-btn {
 	width: 36px;
 	height: 36px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	line-height: 1;
 	border-radius: 50%;
+}
+
+.cart-icon-wrapper {
+	position: relative;
+}
+
+.cart-count-badge {
+	position: absolute;
+	top: -5px;
+	right: -7px;
+	min-width: 18px;
+	height: 18px;
+	padding: 0 5px;
+	border-radius: 999px;
+	background: var(--primary);
+	color: var(--white);
+	font-size: 10px;
+	font-weight: 600;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	line-height: 1;
 }
 
 .icon-btn:hover {
@@ -256,9 +282,19 @@ h2 {
 	color: var(--white);
 	padding: 9px;
 	font-size: 13px;
+	font-weight: 500;
 	margin-top: 10px;
 	border-radius: 4px;
 	cursor: pointer;
+	transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+.add-btn:hover {
+	background: var(--primary);
+}
+
+.add-btn:active {
+	transform: scale(0.98);
 }
 
 .product-info h3 {
