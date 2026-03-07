@@ -1,0 +1,308 @@
+body {
+	font-family: 'Inter', sans-serif;
+	background: var(--bg-light);
+	color: var(--text-primary);
+}
+
+header {
+	position: sticky;
+	top: 0;
+	z-index: 999;
+	background-color: var(--bg-light);
+}
+
+nav {
+	border-bottom: 1px solid var(--border);
+}
+
+.top-bar {
+	background-color: var(--bg-dark);
+	min-height: 35px;
+	padding: 6px 20px;
+	color: var(--text-inverse);
+}
+
+.top-bar .top-container,
+.nav-container,
+.sec-container,
+.f-container {
+	width: 90%;
+	max-width: 1200px;
+	margin: 0 auto;
+}
+
+.top-bar .top-container {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.Shop-Now a {
+	color: var(--text-inverse);
+	font-weight: 700;
+}
+
+.top-bar select {
+	border: none;
+	background-color: var(--bg-dark-alt);
+	color: var(--text-inverse);
+	padding: 4px 6px;
+	border-radius: 4px;
+}
+
+.nav-container {
+	padding: 20px 0;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+}
+
+.nav-container h1 a {
+	color: var(--text-primary);
+}
+
+.anchor-list ul {
+	display: flex;
+	gap: 28px;
+}
+
+.anchor-list a {
+	color: var(--text-primary);
+}
+
+.search-container {
+	position: relative;
+}
+
+.search-container input {
+	width: 240px;
+	padding: 10px 36px 10px 10px;
+	background-color: var(--bg-card);
+	border: 1px solid var(--border);
+	border-radius: 4px;
+}
+
+.search-container i {
+	position: absolute;
+	right: 12px;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+section {
+	min-height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 40px 0;
+}
+
+.sec-container {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+	flex-wrap: wrap;
+}
+
+.child {
+	flex: 1;
+}
+
+.sec-img img {
+	width: 100%;
+	border-radius: 12px;
+	max-height: 540px;
+	object-fit: cover;
+}
+
+.div-2 {
+	padding: 20px;
+}
+
+.div-2 h2 {
+	font-size: 32px;
+	margin-bottom: 12px;
+}
+
+.hero-p {
+	font-size: 14px;
+}
+
+.div-2 .bn input {
+	padding: 10px 12px;
+	margin: 12px 0;
+	border: none;
+	border-bottom: 2px solid var(--border);
+	width: 100%;
+	outline: none;
+}
+
+.btn-submit {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	gap: 14px;
+}
+
+.btn-submit input {
+	margin: 10px 0px;
+	width: 80%;
+	background-color: var(--primary);
+	padding: 10px 24px;
+	border-radius: 5px;
+	border: 1px solid var(--border);
+	color: var(--bg-light);
+	cursor: pointer;
+}
+
+.btn-submit .s-google {
+	width: 80%;
+	background-color: white;
+	border: 2px solid var(--border);
+	text-align: center;
+	padding: 10px 24px;
+}
+
+.btn-submit .s-google a {
+	color: var(--bg-dark);
+}
+
+.btn-submit .s-google i {
+	margin-right: 10px;
+	color: var(--primary);
+}
+
+.account p {
+	color: rgb(58, 58, 58);
+}
+
+.account a {
+	margin-left: 5px;
+	color: var(--primary);
+	cursor: pointer;
+}
+
+.check-validation {
+	font-size: 12px;
+}
+
+footer {
+	background-color: var(--bg-dark);
+}
+
+.f-container {
+	padding: 30px 0;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	gap: 30px;
+}
+
+.f-child {
+	flex: 1 1 180px;
+}
+
+.f-child h3 {
+	margin-bottom: 10px;
+	color: var(--text-inverse);
+}
+
+.f-child ul li {
+	padding: 7px 0;
+}
+
+.f-child ul a,
+.f-p,
+.fp {
+	color: #cfcfcf;
+}
+
+.email-container {
+	position: relative;
+}
+
+.email-container input {
+	width: 100%;
+	margin-top: 12px;
+	padding: 10px 38px 10px 10px;
+	border: 1px solid var(--bg-light);
+	border-radius: 5px;
+	background-color: var(--bg-dark);
+	color: var(--text-inverse);
+}
+
+.email-container span i {
+	position: absolute;
+	right: 12px;
+	top: 55%;
+	color: var(--text-inverse);
+}
+
+.f-images {
+	display: flex;
+	align-items: flex-start;
+	gap: 6px;
+}
+
+.qr img {
+	width: 90px;
+}
+
+.store-buttons {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.store-buttons img {
+	width: 100px;
+	max-height: 44px;
+}
+
+.p-footer {
+	border-top: 1px solid #2b2b2b;
+	padding: 18px;
+	text-align: center;
+	color: #cfcfcf;
+}
+
+@media (max-width: 900px) {
+	.nav-container {
+		flex-direction: column;
+	}
+
+	.anchor-list ul {
+		gap: 16px;
+	}
+}
+
+@media (max-width: 768px) {
+	.top-bar .top-container {
+		flex-direction: column;
+		gap: 4px;
+	}
+
+	.anchor-list ul {
+		flex-direction: column;
+		text-align: center;
+	}
+
+	.search-container input {
+		width: 200px;
+	}
+
+	.sec-container {
+		flex-direction: column;
+	}
+
+	.btn-submit {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	.f-container {
+		flex-direction: column;
+	}
+}
