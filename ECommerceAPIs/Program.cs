@@ -8,7 +8,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// إعداد CORS بسياسة مخصصة للفرونتند
+
+builder.Services.AddAuthentication();
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend",
@@ -29,21 +31,6 @@ builder.Services
 builder.Services.AddAuthorization();
 builder.Services.AddScoped<DbInitializer>();
 
-<<<<<<< HEAD
-// 🔥🔥🔥 إضافة CORS هنا
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowFrontend",
-        policy =>
-        {
-            policy.WithOrigins("http://127.0.0.1:5500")
-                  .AllowAnyHeader()
-                  .AllowAnyMethod();
-        });
-});
-
-=======
->>>>>>> 4fae26ea7e86678120dccb2054859cae41702919
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
