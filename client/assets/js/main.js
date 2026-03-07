@@ -26,11 +26,13 @@ const searchInputEl = document.getElementById("searchInput");
 const searchBtnEl = document.getElementById("searchBtn");
 const mainNavEl = document.getElementById("mainNav");
 const mobileMenuBtnEl = document.getElementById("mobileMenuBtn");
+const cartCountEl = document.getElementById("cartCount");
 
 // =========================
 // Startup Functions
 // =========================
 document.addEventListener("DOMContentLoaded", function () {
+  updateCartCount();
   addEventHandlers();
   loadHomeData();
 });
@@ -191,6 +193,22 @@ function addToCart(productId) {
   }
 
   localStorage.setItem("cart", JSON.stringify(cart));
+  updateCartCount();
+}
+
+function updateCartCount() {
+  if (!cartCountEl) {
+    return;
+  }
+
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  let totalQty = 0;
+
+  for (let i = 0; i < cart.length; i++) {
+    totalQty += Number(cart[i].qty || 0);
+  }
+
+  cartCountEl.textContent = String(totalQty);
 }
 
 function renderProductCards(container, products, showDiscount) {

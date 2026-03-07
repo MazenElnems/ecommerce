@@ -38,76 +38,79 @@ const cartContainer = document.getElementById("cart-items");
 
 let cart = getCart();
 
-cart.forEach(async (itemData) => {
-  let response = await fetch(
-    `https://ecommerce-depi.runasp.net/api/Product/${itemData.id}`,
-  );
-  let product = await response.json();
+if (cartContainer) {
+  cart.forEach(async (itemData) => {
+    let response = await fetch(
+      `https://ecommerce-depi.runasp.net/api/Product/${itemData.id}`,
+    );
+    let product = await response.json();
 
-  let item = document.createElement("div");
-  item.className = "cart-item";
+    let item = document.createElement("div");
+    item.className = "cart-item";
 
-  item.innerHTML = `
-        <div class="product">
-            <img src="${product.image}" alt="">
-            <p>${product.name}</p>
-        </div>
+    item.innerHTML = `
+          <div class="product">
+              <img src="${product.image}" alt="">
+              <p>${product.name}</p>
+          </div>
 
-        <div class="price">$${product.price}</div>
+          <div class="price">$${product.price}</div>
 
-        <div>
-            <input type="number" value="${itemData.qty}" min="1" max="${product.productsInStock}" class="qty-input">
-        </div>
+          <div>
+              <input type="number" value="${itemData.qty}" min="1" max="${product.productsInStock}" class="qty-input">
+          </div>
 
-        <div class="subtotal">$${(product.price * itemData.qty).toFixed(2)}</div>
+          <div class="subtotal">$${(product.price * itemData.qty).toFixed(2)}</div>
 
-        <div>
-            <button class="remove-btn">Remove</button>
-        </div>
-    `;
+          <div>
+              <button class="remove-btn">Remove</button>
+          </div>
+      `;
 
-  cartContainer.appendChild(item);
+    cartContainer.appendChild(item);
 
-  const qtyInput = item.querySelector(".qty-input");
-  const subtotalDiv = item.querySelector(".subtotal");
-  const removeBtn = item.querySelector(".remove-btn");
+    const qtyInput = item.querySelector(".qty-input");
+    const subtotalDiv = item.querySelector(".subtotal");
+    const removeBtn = item.querySelector(".remove-btn");
 
-  /* Quantity Change */
+    /* Quantity Change */
 
-  qtyInput.addEventListener("input", () => {
-    let qty = parseInt(qtyInput.value) || 1;
+    qtyInput.addEventListener("input", () => {
+      let qty = parseInt(qtyInput.value) || 1;
 
-    let subtotal = (product.price * qty).toFixed(2);
+      let subtotal = (product.price * qty).toFixed(2);
 
-    subtotalDiv.textContent = `$${subtotal}`;
+      subtotalDiv.textContent = `$${subtotal}`;
 
-    let cart = getCart();
+      let cart = getCart();
 
-    let productInCart = cart.find((p) => p.id === itemData.id);
+      let productInCart = cart.find((p) => p.id === itemData.id);
 
-    if (productInCart) {
-      productInCart.qty = qty;
-    }
+      if (productInCart) {
+        productInCart.qty = qty;
+      }
 
-    localStorage.setItem("cart", JSON.stringify(cart));
+      localStorage.setItem("cart", JSON.stringify(cart));
 
-    updateCartTotal();
-  });
+      updateCartTotal();
+      updateCartCount();
+    });
 
-  /* Remove Button */
+    /* Remove Button */
 
-  removeBtn.addEventListener("click", () => {
-    removeFromCart(itemData.id);
+    removeBtn.addEventListener("click", () => {
+      removeFromCart(itemData.id);
 
-    item.remove();
+      item.remove();
+
+      updateCartTotal();
+      updateCartCount();
+    });
 
     updateCartTotal();
     updateCartCount();
   });
-
-  updateCartTotal();
-  updateCartCount();
-});
+}
 
 /* Update Cart Total */
 
@@ -125,12 +128,18 @@ function updateCartTotal() {
   document.getElementById("total").textContent = `$${subtotal.toFixed(2)}`;
 }
 
-let cartcount = document.querySelector(".cart-count");
+let cartcount = document.querySelector(".cart-count") || document.getElementById("cartCount");
 function updateCartCount() {
   let cart = getCart();
-  let count = cart.length;
+  let count = 0;
 
-  cartcount.textContent = count;
+  cart.forEach((item) => {
+    count += Number(item.qty) || 0;
+  });
+
+  if (cartcount) {
+    cartcount.textContent = count;
+  }
 }
 
 function addToCart(productId) {
@@ -148,4 +157,7 @@ function addToCart(productId) {
   }
 
   localStorage.setItem("cart", JSON.stringify(cart));
+  updateCartCount();
 }
+
+updateCartCount();

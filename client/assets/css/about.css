@@ -243,7 +243,7 @@ header .mobile-menu-btn:active {
     visibility: hidden !important;
     pointer-events: none !important;
 }
-/* Hide desktop nav on mobile */
+
 @media (max-width: 991.98px) {
     .nav.d-none.d-lg-flex {
         display: none !important;
