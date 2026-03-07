@@ -216,6 +216,11 @@ function renderProductCards(container, products, showDiscount) {
             </article>
         `;
   }
+  let addBtn = document.querySelector(".add-btn");
+  addBtn.addEventListener("click", () => {
+    addToCart(product.id);
+});
+
 
   container.innerHTML = html;
 }
