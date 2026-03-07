@@ -122,6 +122,22 @@ border:none;
 padding:12px;
 cursor:pointer;
 }
+.checkout-btn {
+  width: 100%;
+  background: #db4444;
+  color: #fff;
+  border: none;
+  padding: 14px;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.checkout-btn:hover {
+  background: #c83a3a;
+}
 
 
 

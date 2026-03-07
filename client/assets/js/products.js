@@ -6,19 +6,22 @@ let filteredProducts = [];
 let currentPage = 1;
 let totalPages = 1;
 
-document.addEventListener("DOMContentLoaded", () => loadProducts(currentPage));
+document.addEventListener("DOMContentLoaded", () => {
+  loadProducts(currentPage);
+  updateCartCount();
+});
 
 /* =========================
-   LOAD PRODUCTS (Server Pagination)
+   LOAD PRODUCTS
 ========================= */
 
 async function loadProducts(page = 1) {
   try {
+
     const url = `${BASE_URL}/api/Product?pageNumber=${page}&pageSize=${PAGE_SIZE}`;
     const res = await fetch(url);
     const data = await res.json();
 
-    // يدعم حالتين: { items, totalCount } أو مصفوفة مباشرة
     const items = data.items || data;
     const totalCount = data.totalCount ?? items.length;
 
@@ -32,7 +35,9 @@ async function loadProducts(page = 1) {
     renderPagination();
 
   } catch (error) {
+
     console.error("API Error:", error);
+
   }
 }
 
@@ -62,23 +67,30 @@ function renderProducts() {
   const container = document.getElementById("products-container");
   const countEl = document.getElementById("productsCount");
 
+  if (!container) return;
+
   container.innerHTML = "";
 
   if (filteredProducts.length === 0) {
+
     container.innerHTML = `
       <div class="empty-state">
         <i class="fa-regular fa-face-sad-tear"></i>
         <p>No products found</p>
       </div>
     `;
-    countEl.textContent = "";
+
+    if (countEl) countEl.textContent = "";
     return;
+
   }
 
   const start = (currentPage - 1) * PAGE_SIZE;
 
-  countEl.textContent =
-    `Showing ${start + 1}–${start + filteredProducts.length}`;
+  if (countEl) {
+    countEl.textContent =
+      `Showing ${start + 1}–${start + filteredProducts.length}`;
+  }
 
   filteredProducts.forEach((product) => {
 
@@ -89,29 +101,136 @@ function renderProducts() {
 
     card.innerHTML = `
       <div class="shop-img">
+
         <img
           src="${product.image}"
           alt="${product.name}"
           loading="lazy"
           onerror="this.src='https://placehold.co/300x300'"
         >
+
         <span class="discount-badge">-35%</span>
+
         <button class="wishlist-btn">
           <i class="fa-regular fa-heart"></i>
         </button>
+
       </div>
 
       <div class="shop-body">
+
         <h4>${product.name}</h4>
+
         <p class="price">${product.price} EGP</p>
+
         <div class="stars">${stars}</div>
-        <button class="btn-add" onclick="addToCart(${product.id})">Add To Cart</button>
+
+        <button class="btn-add" data-product-id="${product.id}">
+          Add To Cart
+        </button>
+
       </div>
     `;
 
     container.appendChild(card);
 
   });
+
+  // Add event listener to container using delegation
+  container.addEventListener("click", function(e) {
+    if (e.target.classList.contains("btn-add")) {
+      const productId = parseInt(e.target.getAttribute("data-product-id"));
+      addToCart(productId);
+    }
+  });
+
+}
+
+/* =========================
+   ADD TO CART
+========================= */
+
+function addToCart(productId) {
+
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  let product = cart.find((p) => p.id === productId);
+
+  if (product) {
+    product.qty++;
+  } else {
+    cart.push({
+      id: productId,
+      qty: 1
+    });
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+  showAddToCartMessage();
+  updateCartCount();
+
+}
+
+/* =========================
+   SUCCESS MESSAGE
+========================= */
+
+function showAddToCartMessage() {
+  // Remove any existing toast
+  const oldToast = document.querySelector('[data-toast="success"]');
+  if (oldToast) oldToast.remove();
+
+  // Create toast notification
+  const toast = document.createElement("div");
+  toast.setAttribute("data-toast", "success");
+  toast.innerHTML = "✓ تمت إضافة المنتج للسلة بنجاح";
+  
+  toast.style.cssText = `
+    position: fixed !important;
+    top: 30px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    background: #28a745 !important;
+    color: white !important;
+    padding: 18px 30px !important;
+    border-radius: 8px !important;
+    font-size: 16px !important;
+    font-weight: bold !important;
+    z-index: 999999999 !important;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.3) !important;
+    text-align: center !important;
+    min-width: 350px !important;
+    animation: slideDown 0.3s ease !important;
+  `;
+
+  document.body.appendChild(toast);
+
+  // Remove after 3 seconds
+  setTimeout(() => {
+    if (toast.parentElement) {
+      toast.style.animation = "slideUp 0.3s ease";
+      setTimeout(() => {
+        if (toast.parentElement) toast.remove();
+      }, 300);
+    }
+  }, 3000);
+}
+
+/* =========================
+   UPDATE CART COUNT
+========================= */
+
+function updateCartCount() {
+
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  const cartCountEl = document.querySelector(".cart-count");
+
+  if (cartCountEl) {
+    cartCountEl.textContent = cart.length;
+  }
+
 }
 
 /* =========================
@@ -137,28 +256,28 @@ function renderPagination() {
 
   if (totalPages <= 1) return;
 
-  // Previous
   pagination.innerHTML += `
     <li class="page-item ${currentPage === 1 ? "disabled" : ""}">
       <a class="page-link" href="#" onclick="changePage(${currentPage - 1}); return false;">Previous</a>
     </li>
   `;
 
-  // Page numbers
   for (let i = 1; i <= totalPages; i++) {
+
     pagination.innerHTML += `
       <li class="page-item ${i === currentPage ? "active" : ""}">
         <a class="page-link" href="#" onclick="changePage(${i}); return false;">${i}</a>
       </li>
     `;
+
   }
 
-  // Next
   pagination.innerHTML += `
     <li class="page-item ${currentPage === totalPages ? "disabled" : ""}">
       <a class="page-link" href="#" onclick="changePage(${currentPage + 1}); return false;">Next</a>
     </li>
   `;
+
 }
 
 /* =========================
@@ -177,25 +296,33 @@ function changePage(page) {
   });
 
 }
+
 /* =========================
    SORT
 ========================= */
 
-document.getElementById("sortProducts").addEventListener("change", function () {
+const sortSelect = document.getElementById("sortProducts");
 
-  const value = this.value;
+if (sortSelect) {
 
-  if (value === "priceLow") {
-    filteredProducts.sort((a, b) => a.price - b.price);
-  }
+  sortSelect.addEventListener("change", function () {
 
-  if (value === "priceHigh") {
-    filteredProducts.sort((a, b) => b.price - a.price);
-  }
+    const value = this.value;
 
-  if (value === "name") {
-    filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
-  }
+    if (value === "priceLow") {
+      filteredProducts.sort((a, b) => a.price - b.price);
+    }
 
-  renderProducts();
-});
+    if (value === "priceHigh") {
+      filteredProducts.sort((a, b) => b.price - a.price);
+    }
+
+    if (value === "name") {
+      filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
+    }
+
+    renderProducts();
+
+  });
+
+}

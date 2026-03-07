@@ -36,37 +36,39 @@ function clearCart() {
 
 const cartContainer = document.getElementById("cart-items");
 
-let cart = getCart();
+// Only run cart rendering if we're on the cart page
+if (cartContainer) {
+  let cart = getCart();
 
-cart.forEach(async (itemData) => {
-  let response = await fetch(
-    `https://ecommerce-depi.runasp.net/api/Product/${itemData.id}`,
-  );
-  let product = await response.json();
+  cart.forEach(async (itemData) => {
+    let response = await fetch(
+      `https://ecommerce-depi.runasp.net/api/Product/${itemData.id}`,
+    );
+    let product = await response.json();
 
-  let item = document.createElement("div");
-  item.className = "cart-item";
+    let item = document.createElement("div");
+    item.className = "cart-item";
 
-  item.innerHTML = `
-        <div class="product">
-            <img src="${product.image}" alt="">
-            <p>${product.name}</p>
-        </div>
+    item.innerHTML = `
+          <div class="product">
+              <img src="${product.image}" alt="">
+              <p>${product.name}</p>
+          </div>
 
-        <div class="price">$${product.price}</div>
+          <div class="price">$${product.price}</div>
 
-        <div>
-            <input type="number" value="${itemData.qty}" min="1" max="${product.productsInStock}" class="qty-input">
-        </div>
+          <div>
+              <input type="number" value="${itemData.qty}" min="1" max="${product.productsInStock}" class="qty-input">
+          </div>
 
-        <div class="subtotal">$${(product.price * itemData.qty).toFixed(2)}</div>
+          <div class="subtotal">$${(product.price * itemData.qty).toFixed(2)}</div>
 
-        <div>
-            <button class="remove-btn">Remove</button>
-        </div>
-    `;
+          <div>
+              <button class="remove-btn">Remove</button>
+          </div>
+      `;
 
-  cartContainer.appendChild(item);
+    cartContainer.appendChild(item);
 
   const qtyInput = item.querySelector(".qty-input");
   const subtotalDiv = item.querySelector(".subtotal");
@@ -107,11 +109,17 @@ cart.forEach(async (itemData) => {
 
   updateCartTotal();
   updateCartCount();
-});
+  });
+}
 
 /* Update Cart Total */
 
 function updateCartTotal() {
+  const subtotalEl = document.getElementById("subtotal");
+  const totalEl = document.getElementById("total");
+  
+  if (!subtotalEl || !totalEl) return;
+  
   let subtotalElements = document.querySelectorAll(".cart-item .subtotal");
 
   let subtotal = 0;
@@ -120,32 +128,35 @@ function updateCartTotal() {
     subtotal += parseFloat(el.textContent.replace("$", ""));
   });
 
-  document.getElementById("subtotal").textContent = `$${subtotal.toFixed(2)}`;
-
-  document.getElementById("total").textContent = `$${subtotal.toFixed(2)}`;
+  subtotalEl.textContent = `$${subtotal.toFixed(2)}`;
+  totalEl.textContent = `$${subtotal.toFixed(2)}`;
 }
 
-let cartcount = document.querySelector(".cart-count");
 function updateCartCount() {
+  let cartcount = document.querySelector(".cart-count");
+  if (!cartcount) return;
+  
   let cart = getCart();
   let count = cart.length;
 
   cartcount.textContent = count;
 }
 
-function addToCart(productId) {
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-  let product = cart.find((p) => p.id === productId);
+const checkoutBtn = document.getElementById("checkoutBtn");
 
-  if (product) {
-    product.qty++;
-  } else {
-    cart.push({
-      id: productId,
-      qty: 1,
-    });
-  }
+if (checkoutBtn) {
+  checkoutBtn.addEventListener("click", () => {
+    clearCart();
+    cartContainer.innerHTML = "";
+    
+    const subtotalEl = document.getElementById("subtotal");
+    const totalEl = document.getElementById("total");
+    
+    if (subtotalEl) subtotalEl.textContent = "$0.00";
+    if (totalEl) totalEl.textContent = "$0.00";
 
-  localStorage.setItem("cart", JSON.stringify(cart));
+    updateCartCount();
+    alert("Order placed successfully!");
+  });
 }
