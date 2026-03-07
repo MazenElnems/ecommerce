@@ -5,10 +5,10 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+builder.Services.AddAuthentication();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddAuthentication();
 
 builder.Services.AddCors(options =>
 {
@@ -43,7 +43,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// يجب وضع UseCors قبل UseAuthorization
 app.UseCors();
 app.UseHttpsRedirection();
 app.UseAuthentication();
