@@ -176,6 +176,24 @@ function renderAllProductSections(products) {
   renderProductCards(exploreGridEl, products.slice(0, EXPLORE_COUNT), false);
 }
 
+function addToCart(productId) {
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    let product = cart.find(p => p.id === productId);
+
+    if (product) {
+        product.qty++;
+    } else {
+        cart.push({
+            id: productId,
+            qty: 1
+        });
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+}
+
 function renderProductCards(container, products, showDiscount) {
   if (!products || products.length === 0) {
     container.innerHTML = "<p>No products found.</p>";
