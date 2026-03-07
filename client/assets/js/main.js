@@ -8,7 +8,7 @@ const BEST_COUNT = 8;
 const EXPLORE_COUNT = 16;
 
 // =========================
-// Global Variables 
+// Global Variables
 // =========================
 let allCategories = [];
 let allProducts = [];
@@ -31,153 +31,170 @@ const mobileMenuBtnEl = document.getElementById("mobileMenuBtn");
 // Startup Functions
 // =========================
 document.addEventListener("DOMContentLoaded", function () {
-    addEventHandlers();
-    loadHomeData();
+  addEventHandlers();
+  loadHomeData();
 });
 
 // =========================
 // Data Loading Functions
 // =========================
 async function loadHomeData() {
-    try {
-        const categories = await getCategoriesFromApi();
-        const products = await getProductsFromApi(1, 48);
+  try {
+    const categories = await getCategoriesFromApi();
+    const products = await getProductsFromApi(1, 48);
 
-        allCategories = categories;
-        allProducts = products;
-        shownProducts = products;
+    allCategories = categories;
+    allProducts = products;
+    shownProducts = products;
 
-        drawCategoryMenus(categories);
-        drawAllProductSections(shownProducts);
-    } catch (error) {
-        console.error(error);
-        console.error("Could not load data from API.");
-    }
+    renderCategoryMenue(categories);
+    renderAllProductSections(shownProducts);
+  } catch (error) {
+    console.error(error);
+    console.error("Could not load data from API.");
+  }
 }
 
 async function getCategoriesFromApi() {
+  try {
     const response = await fetch(`${API_BASE_URL}/api/Categories`);
     if (!response.ok) {
-        throw new Error("Categories request failed");
+      console.error("Categories request failed");
+      return [];
     }
     return await response.json();
+  } catch (error) {
+    console.error("Categories request failed:", error);
+    return [];
+  }
 }
 
 async function getProductsFromApi(pageNumber, pageSize) {
+  try {
     const url = `${API_BASE_URL}/api/Product?pageNumber=${pageNumber}&pageSize=${pageSize}`;
     const response = await fetch(url);
     if (!response.ok) {
-        throw new Error("Products request failed");
+      console.error("Products request failed");
+      return [];
     }
     const result = await response.json();
     return result.items ? result.items : [];
+  } catch (error) {
+    console.error("Products request failed:", error);
+    return [];
+  }
 }
 
 async function getSearchProductsFromApi(query) {
+  try {
     const url = `${API_BASE_URL}/api/Product/search?query=${encodeURIComponent(query)}&pageNumber=1&pageSize=48`;
-
     const response = await fetch(url);
     if (!response.ok) {
-        throw new Error("Search request failed");
+      console.error("Search request failed");
+      return [];
     }
     const result = await response.json();
     return result.items ? result.items : [];
+  } catch (error) {
+    console.error("Search request failed:", error);
+    return [];
+  }
 }
 
 // =========================
 // Render Categories
 // =========================
-function drawCategoryMenus(categories) {
-    drawBrowseCategoryMenu(categories);
-    AddCategoryEventHandlers();
+function renderCategoryMenue(categories) {
+  const menuHtml = getCategoryMenueHtml(categories);
+  browseCategoriesEl.innerHTML = menuHtml;
+  addCategoryEventHandlers();
 }
 
-function drawBrowseCategoryMenu(categories) {
-    const icons = [
-        "fa-mobile-screen-button",
-        "fa-desktop",
-        "fa-clock",
-        "fa-camera",
-        "fa-headphones",
-        "fa-gamepad"
-    ];
+function getCategoryMenueHtml(categories) {
+  const icons = [
+    "fa-mobile-screen-button",
+    "fa-desktop",
+    "fa-clock",
+    "fa-camera",
+    "fa-headphones",
+    "fa-gamepad",
+  ];
 
-    let html = "";
-    const maxItems = Math.min(categories.length, 6);
+  let html = "";
+  const maxItems = Math.min(categories.length, 6);
 
-    for (let i = 0; i < maxItems; i++) {
-        const category = categories[i];
-        const activeClass = i === 3 ? "active" : "";
-        const iconName = icons[i % icons.length];
+  for (let i = 0; i < maxItems; i++) {
+    const category = categories[i];
+    const activeClass = i === 3 ? "active" : "";
+    const iconName = icons[i % icons.length];
 
-        html += `
+    html += `
             <article class="category-card ${activeClass}" data-category-id="${category.id}">
                 <i class="fa-solid ${iconName}"></i>
                 <p>${category.name}</p>
             </article>
         `;
-    }
+  }
 
-    browseCategoriesEl.innerHTML = html;
+  return html;
 }
 
-function AddCategoryEventHandlers() {
-    const browseCards = browseCategoriesEl.querySelectorAll(".category-card");
-    for (let i = 0; i < browseCards.length; i++) {
-        browseCards[i].addEventListener("click", function () {
-            const categoryId = Number(browseCards[i].dataset.categoryId);
-            filterProductsByCategory(categoryId);
+function addCategoryEventHandlers() {
+  const browseCards = browseCategoriesEl.querySelectorAll(".category-card");
+  for (let i = 0; i < browseCards.length; i++) {
+    browseCards[i].addEventListener("click", function () {
+      const categoryId = Number(browseCards[i].dataset.categoryId);
+      filterProductsByCategory(categoryId);
 
-            for (let j = 0; j < browseCards.length; j++) {
-                browseCards[j].classList.remove("active");
-            }
-            browseCards[i].classList.add("active");
-        });
-    }
+      for (let j = 0; j < browseCards.length; j++) {
+        browseCards[j].classList.remove("active");
+      }
+      browseCards[i].classList.add("active");
+    });
+  }
 }
 
 function filterProductsByCategory(categoryId) {
-    selectedCategoryId = categoryId;
+  selectedCategoryId = categoryId;
 
-    const list = [];
-    for (let i = 0; i < allProducts.length; i++) {
-        if (allProducts[i].categoryId === categoryId) {
-            list.push(allProducts[i]);
-        }
+  const list = [];
+  for (let i = 0; i < allProducts.length; i++) {
+    if (allProducts[i].categoryId === categoryId) {
+      list.push(allProducts[i]);
     }
+  }
 
-    shownProducts = list;
-    drawAllProductSections(shownProducts);
+  shownProducts = list;
+  renderAllProductSections(shownProducts);
 }
 
 // =========================
 // Render Products
 // =========================
-function drawAllProductSections(products) {
-    drawProductCards(bestSellingGridEl, products.slice(0, BEST_COUNT), false);
-    drawProductCards(exploreGridEl, products.slice(0, EXPLORE_COUNT), false);
+function renderAllProductSections(products) {
+  renderProductCards(bestSellingGridEl, products.slice(0, BEST_COUNT), false);
+  renderProductCards(exploreGridEl, products.slice(0, EXPLORE_COUNT), false);
 }
 
-function drawProductCards(container, products, showDiscount) {
-    if (!products || products.length === 0) {
-        container.innerHTML = "<p>No products found.</p>";
-        return;
-    }
+function renderProductCards(container, products, showDiscount) {
+  if (!products || products.length === 0) {
+    container.innerHTML = "<p>No products found.</p>";
+    return;
+  }
 
-    let html = "";
+  let html = "";
 
-    for (let i = 0; i < products.length; i++) {
-        const product = products[i];
-        const price = Number(product.price);
-        const oldPrice = (price * 1.2).toFixed(2);
-        const imageUrl = product.image ? product.image : "https://via.placeholder.com/300x300?text=Product";
-        const stars = Math.floor(Math.random() * 2) + 4;
-        const starCount = Math.floor(Math.random() * (300 - 40 + 1)) + 40;
-        const discount = "-" + (Math.floor(Math.random() * (30 - 10 + 1)) + 10) + "%";
-        const starsText = "★".repeat(stars) + "☆".repeat(5 - stars);
-
-        const discountHtml = showDiscount ? `<span class="discount-badge">${discount}</span>` : "";
-        html += `
+  for (let i = 0; i < products.length; i++) {
+    const product = products[i];
+    const price = Number(product.price);
+    const oldPrice = (price * 1.2).toFixed(2);
+    const imageUrl = product.image
+      ? product.image
+      : "https://via.placeholder.com/300x300?text=Product";
+    const discountHtml = showDiscount
+      ? `<span class="discount-badge">-20%</span>`
+      : "";
+    html += `
             <article class="product-card">
                 <div class="product-media">
                     ${discountHtml}
@@ -194,63 +211,62 @@ function drawProductCards(container, products, showDiscount) {
                         <span class="new-price">$${price.toFixed(2)}</span>
                         <span class="old-price">$${oldPrice}</span>
                     </div>
-                    <p class="rating">${starsText} <span class="count">(${starCount})</span></p>
+                    <p class="rating">★★★★☆ <span class="count">(88)</span></p>
                 </div>
             </article>
         `;
-    }
+  }
 
-    container.innerHTML = html;
+  container.innerHTML = html;
 }
 
 // =========================
 // UI Events
 // =========================
 function addEventHandlers() {
-    searchBtnEl.addEventListener("click", onSearchClick);
-    searchInputEl.addEventListener("keydown", function (event) {
-        if (event.key === "Enter") {
-            onSearchClick();
-        }
-    });
+  searchBtnEl.addEventListener("click", onSearchClick);
+  searchInputEl.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+      onSearchClick();
+    }
+  });
 
-    allProductsBtnEl.addEventListener("click", function (event) {
-        event.preventDefault();
-        drawProductCards(exploreGridEl, shownProducts, false);
-        window.scrollTo({
-            top: exploreGridEl.offsetTop - 100,
-            behavior: "smooth"
-        });
+  allProductsBtnEl.addEventListener("click", function (event) {
+    event.preventDefault();
+    renderProductCards(exploreGridEl, shownProducts, false);
+    window.scrollTo({
+      top: exploreGridEl.offsetTop - 100,
+      behavior: "smooth",
     });
+  });
 
-    mobileMenuBtnEl.addEventListener("click", function () {
-        mainNavEl.classList.toggle("show");
-    });
+  mobileMenuBtnEl.addEventListener("click", function () {
+    mainNavEl.classList.toggle("show");
+  });
 }
 
 async function onSearchClick() {
-    const query = searchInputEl.value.trim();
+  const query = searchInputEl.value.trim();
 
-    if (query === "") {
-        if (selectedCategoryId === null) {
-            shownProducts = allProducts.slice();
-        } else {
-            shownProducts = allProducts.filter(function (p) {
-                return p.categoryId === selectedCategoryId;
-            });
-        }
-
-        drawAllProductSections(shownProducts);
-        return;
+  if (query === "") {
+    if (selectedCategoryId === null) {
+      shownProducts = allProducts.slice();
+    } else {
+      shownProducts = allProducts.filter(function (p) {
+        return p.categoryId === selectedCategoryId;
+      });
     }
 
-    try {
-        const searchResult = await getSearchProductsFromApi(query);
-        shownProducts = searchResult;
-        drawAllProductSections(shownProducts);
-    } catch (error) {
-        console.error(error);
-        console.error("Search failed. Try again.");
-    }
+    renderAllProductSections(shownProducts);
+    return;
+  }
+
+  try {
+    const searchResult = await getSearchProductsFromApi(query);
+    shownProducts = searchResult;
+    renderAllProductSections(shownProducts);
+  } catch (error) {
+    console.error(error);
+    console.error("Search failed. Try again.");
+  }
 }
-
