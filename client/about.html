@@ -29,28 +29,58 @@
 
     <!-- Header -->
     <header class="header">
-        <div class="container header-inner">
-            <a class="logo" href="#">Exclusive</a>
-            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu">
-                <i class="fa-solid fa-bars"></i>
-            </button>
-            <nav class="nav" id="mainNav">
-                <a href="./index.html">Home</a>
-                <a href="./contact.html">Contact</a>
-                <a class="active" href="./about.html">About</a>
-                <a href="./signup.html">Sign Up</a>
-            </nav>
-            <div class="header-actions">
-                <div class="search-box">
-                    <input id="searchInput" type="text" placeholder="What are you looking for?" />
-                    <button id="searchBtn" aria-label="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
-                </div>
-                <button class="icon-btn" aria-label="Wishlist"><i class="fa-regular fa-heart"></i></button>
-                <button class="icon-btn" aria-label="Cart"><i class="fa-solid fa-cart-shopping"></i></button>
-                <a class="auth-btn" id="loginBtn" href="./login.html">Login</a>
+    <div class="container header-inner d-flex justify-content-between align-items-center">
+        <a class="logo" href="./index.html">Exclusive</a>
+        
+        <!-- Mobile Menu Toggle -->
+        <button class="mobile-menu-btn d-lg-none" id="mobileMenuBtn" aria-label="Toggle menu">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+        
+        <!-- Desktop Nav -->
+        <nav class="nav d-none d-lg-flex" id="desktopNav">
+            <a href="./index.html">Home</a>
+            <a href="./contact.html">Contact</a>
+            <a class="active" href="./about.html">About</a>
+            <a href="./signup.html">Sign Up</a>
+        </nav>
+        
+        <!-- Header Actions -->
+        <div class="header-actions d-flex align-items-center">
+            <div class="search-box me-3 d-none d-md-flex">
+                <input id="searchInput" type="text" placeholder="What are you looking for?" />
+                <button id="searchBtn" aria-label="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
             </div>
+            <button class="icon-btn me-2" aria-label="Wishlist"><i class="fa-regular fa-heart"></i></button>
+            <button class="icon-btn me-2" aria-label="Cart"><i class="fa-solid fa-cart-shopping"></i></button>
+            <a class="auth-btn" id="loginBtn" href="./login.html">Login</a>
         </div>
-    </header>
+    </div>
+    
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+    
+    <!-- Mobile Menu Slide -->
+    <nav class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <a class="logo" href="./index.html">Exclusive</a>
+            <button class="close-btn" id="closeMobileMenu">
+                <i class="fa-solid fa-times"></i>
+            </button>
+        </div>
+        <ul class="mobile-menu-list">
+            <li><a href="./index.html">Home</a></li>
+            <li><a href="./contact.html">Contact</a></li>
+            <li><a class="active" href="./about.html">About</a></li>
+            <li><a href="./signup.html">Sign Up</a></li>
+        </ul>
+        <div class="mobile-actions">
+            <a href="./login.html" class="auth-btn w-100 mb-2">Login</a>
+            <button class="icon-btn w-100 mb-2" aria-label="Wishlist"><i class="fa-regular fa-heart"></i></button>
+            <button class="icon-btn w-100" aria-label="Cart"><i class="fa-solid fa-cart-shopping"></i></button>
+        </div>
+    </nav>
+</header>
 
     <!-- Main Content -->
     <main class="py-5">
