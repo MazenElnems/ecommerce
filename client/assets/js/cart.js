@@ -133,11 +133,15 @@ function updateCartTotal() {
 }
 
 function updateCartCount() {
-  let cartcount = document.querySelector(".cart-count");
+  let cartcount = document.querySelector(".cart-count, #cartCount");
   if (!cartcount) return;
   
   let cart = getCart();
-  let count = cart.length;
+  let count = 0;
+
+  cart.forEach((item) => {
+    count += Number(item.qty || 0);
+  });
 
   cartcount.textContent = count;
 }
@@ -160,3 +164,5 @@ if (checkoutBtn) {
     alert("Order placed successfully!");
   });
 }
+
+updateCartCount();

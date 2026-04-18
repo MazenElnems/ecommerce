@@ -33,9 +33,20 @@ const cartCountEl = document.getElementById("cartCount");
 // =========================
 document.addEventListener("DOMContentLoaded", function () {
   updateCartCount();
+  syncAllProductsLink();
   addEventHandlers();
-  loadHomeData();
+  if (browseCategoriesEl && bestSellingGridEl && exploreGridEl) {
+    loadHomeData();
+  }
 });
+
+function syncAllProductsLink() {
+  if (!allProductsBtnEl) {
+    return;
+  }
+
+  allProductsBtnEl.href = new URL("./products.html", window.location.href).href;
+}
 
 // =========================
 // Data Loading Functions
@@ -107,6 +118,10 @@ async function getSearchProductsFromApi(query) {
 // Render Categories
 // =========================
 function renderCategoryMenue(categories) {
+  if (!browseCategoriesEl) {
+    return;
+  }
+
   const menuHtml = getCategoryMenueHtml(categories);
   browseCategoriesEl.innerHTML = menuHtml;
   addCategoryEventHandlers();
@@ -174,6 +189,10 @@ function filterProductsByCategory(categoryId) {
 // Render Products
 // =========================
 function renderAllProductSections(products) {
+  if (!bestSellingGridEl || !exploreGridEl) {
+    return;
+  }
+
   renderProductCards(bestSellingGridEl, products.slice(0, BEST_COUNT), false);
   renderProductCards(exploreGridEl, products.slice(0, EXPLORE_COUNT), false);
 }
@@ -259,18 +278,20 @@ function renderProductCards(container, products, showDiscount) {
 // UI Events
 // =========================
 function addEventHandlers() {
-  searchBtnEl.addEventListener("click", onSearchClick);
-  searchInputEl.addEventListener("keydown", function (event) {
-    if (event.key === "Enter") {
-      onSearchClick();
-    }
-  });
+  if (searchBtnEl && searchInputEl && browseCategoriesEl && bestSellingGridEl && exploreGridEl) {
+    searchBtnEl.addEventListener("click", onSearchClick);
+    searchInputEl.addEventListener("keydown", function (event) {
+      if (event.key === "Enter") {
+        onSearchClick();
+      }
+    });
+  }
 
-  
-
-  mobileMenuBtnEl.addEventListener("click", function () {
-    mainNavEl.classList.toggle("show");
-  });
+  if (mobileMenuBtnEl && mainNavEl) {
+    mobileMenuBtnEl.addEventListener("click", function () {
+      mainNavEl.classList.toggle("show");
+    });
+  }
 }
 
 async function onSearchClick() {

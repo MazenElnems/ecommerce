@@ -1,201 +1,170 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Products</title>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Products - Exclusive</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+			rel="stylesheet"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+		/>
+		<link rel="stylesheet" href="./assets/css/base.css" />
+		<link rel="stylesheet" href="./assets/css/products.css" />
+		<link rel="stylesheet" href="./assets/css/style.css" />
+		<link rel="stylesheet" href="./assets/css/bootstrap.min.css" />
+	</head>
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="assets/css/products.css" />
+	<body>
+		<div class="top-bar">
+			<div class="container top-bar-inner">
+				<p>
+					Summer Sale For All Swim Suits And Free Express Delivery -
+					OFF 50%!
+					<a href="./index.html">ShopNow</a>
+				</p>
+				<select id="languageSelect" aria-label="Language">
+					<option>English</option>
+					<option>Arabic</option>
+				</select>
+			</div>
+		</div>
 
-    <!-- Bootstrap -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+		<header class="header">
+			<div class="container header-inner">
+				<a class="logo" href="./index.html">Exclusive</a>
+				<button
+					class="mobile-menu-btn"
+					id="mobileMenuBtn"
+					aria-label="Open menu"
+				>
+					<i class="fa-solid fa-bars"></i>
+				</button>
+				<nav class="nav" id="mainNav">
+					<a href="./index.html">Home</a>
+					<a href="./contact.html">Contact</a>
+					<a href="./about.html">About</a>
+					<a href="./signup.html">Sign Up</a>
+				</nav>
+				<div class="header-actions">
+					<div class="search-box">
+						<input
+							type="text"
+							id="searchInput"
+							placeholder="What are you looking for?"
+						/>
+						<button type="button" id="searchBtn" aria-label="Search">
+							<i class="fa-solid fa-magnifying-glass"></i>
+						</button>
+					</div>
+					<button class="icon-btn" aria-label="Wishlist">
+						<i class="fa-regular fa-heart"></i>
+					</button>
+					<a
+						class="icon-btn cart-icon-wrapper"
+						aria-label="Cart"
+						href="./cart.html"
+					>
+						<i class="fa-solid fa-cart-shopping"></i>
+						<span class="cart-count-badge" id="cartCount">0</span>
+					</a>
+					<a class="auth-btn" id="loginBtn" href="./login.html">Login</a>
+				</div>
+			</div>
+		</header>
 
-    <!-- Font Awesome -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    />
-  </head>
+		<section class="products-section">
+			<div
+				class="products-header d-flex justify-content-between align-items-center mb-4"
+			>
+				<p class="products-count mb-0" id="productsCount"></p>
 
-  <body>
-    <div class="top-banner">
-      <p>
-        Summer Sale For All Swim Suits And Free Express Delivery - OFF 50%!
-        <a href="#">ShopNow</a>
-      </p>
-      <div class="lang-selector">
-        English <i class="fas fa-chevron-down"></i>
-      </div>
-    </div>
+				<select class="form-select w-auto" id="sortProducts">
+					<option value="">Sort</option>
+					<option value="priceLow">Price: Low to High</option>
+					<option value="priceHigh">Price: High to Low</option>
+					<option value="name">Name</option>
+				</select>
+			</div>
 
-    <nav class="navbar navbar-expand-lg bg-white border-bottom">
-      <div class="container">
-        <a class="navbar-brand fw-bold" href="#">Exclusive</a>
+			<div class="products-grid" id="products-container">
+				<div class="skeleton-grid" id="skeleton">
+					<div class="skeleton-card">
+						<div class="skeleton-img"></div>
+						<div class="skeleton-body">
+							<div class="skeleton-line long"></div>
+							<div class="skeleton-line short"></div>
+						</div>
+					</div>
 
-        <ul class="navbar-nav mx-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="./index.html">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="./contact.html">Contact</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="./about.html">About</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="./login.html">Sign Up</a>
-          </li>
-        </ul>
+					<div class="skeleton-card">
+						<div class="skeleton-img"></div>
+						<div class="skeleton-body">
+							<div class="skeleton-line long"></div>
+							<div class="skeleton-line short"></div>
+						</div>
+					</div>
 
-        <div class="d-flex align-items-center gap-3">
-          <div class="search-box">
-            <input
-              type="text"
-              id="searchInput"
-              placeholder="What are you looking for"
-            />
-            <i
-              class="fa-solid fa-magnifying-glass"
-              onclick="searchProducts()"
-            ></i>
-          </div>
+					<div class="skeleton-card">
+						<div class="skeleton-img"></div>
+						<div class="skeleton-body">
+							<div class="skeleton-line long"></div>
+							<div class="skeleton-line short"></div>
+						</div>
+					</div>
 
-          <a href="products.html"><i class="fa-regular fa-heart"></i></a>
-          <a href="cart.html"><i class="fa-solid fa-cart-shopping"></i></a>
-          <a href="account.html"><i class="fa-regular fa-user"></i></a>
-        </div>
-      </div>
-    </nav>
+					<div class="skeleton-card">
+						<div class="skeleton-img"></div>
+						<div class="skeleton-body">
+							<div class="skeleton-line long"></div>
+							<div class="skeleton-line short"></div>
+						</div>
+					</div>
+				</div>
+			</div>
 
-    <!-- PRODUCTS SECTION -->
+			<nav class="pagination-wrap mt-5">
+				<ul class="pagination justify-content-center" id="pagination"></ul>
+			</nav>
+		</section>
 
-    <!-- PRODUCTS SECTION -->
-    <section class="products-section">
-      <!-- Products count -->
-      <div
-        class="products-header d-flex justify-content-between align-items-center mb-4"
-      >
-        <p class="products-count mb-0" id="productsCount"></p>
+		<footer class="footer">
+			<div class="container footer-grid">
+				<div>
+					<h3>Exclusive</h3>
+					<p>Subscribe</p>
+					<p>Get 10% off your first order</p>
+				</div>
+				<div>
+					<h4>Support</h4>
+					<p>111 Bijoy sarani, Dhaka</p>
+					<p>exclusive@gmail.com</p>
+					<p>+88015-88888-9999</p>
+				</div>
+				<div>
+					<h4>Account</h4>
+					<a href="#">My Account</a>
+					<a href="#">Login / Register</a>
+					<a href="#">Cart</a>
+					<a href="#">Wishlist</a>
+				</div>
+				<div>
+					<h4>Quick Link</h4>
+					<a href="#">Privacy Policy</a>
+					<a href="#">Terms Of Use</a>
+					<a href="#">FAQ</a>
+					<a href="#">Contact</a>
+				</div>
+			</div>
+		</footer>
 
-        <!-- simple filter placeholder -->
-        <select class="form-select w-auto" id="sortProducts">
-          <option value="">Sort</option>
-          <option value="priceLow">Price: Low → High</option>
-          <option value="priceHigh">Price: High → Low</option>
-          <option value="name">Name</option>
-        </select>
-      </div>
-
-      <!-- Products Grid -->
-      <div class="products-grid" id="products-container">
-        <!-- Skeleton loading -->
-        <div class="skeleton-grid" id="skeleton">
-          <div class="skeleton-card">
-            <div class="skeleton-img"></div>
-            <div class="skeleton-body">
-              <div class="skeleton-line long"></div>
-              <div class="skeleton-line short"></div>
-            </div>
-          </div>
-
-          <div class="skeleton-card">
-            <div class="skeleton-img"></div>
-            <div class="skeleton-body">
-              <div class="skeleton-line long"></div>
-              <div class="skeleton-line short"></div>
-            </div>
-          </div>
-
-          <div class="skeleton-card">
-            <div class="skeleton-img"></div>
-            <div class="skeleton-body">
-              <div class="skeleton-line long"></div>
-              <div class="skeleton-line short"></div>
-            </div>
-          </div>
-
-          <div class="skeleton-card">
-            <div class="skeleton-img"></div>
-            <div class="skeleton-body">
-              <div class="skeleton-line long"></div>
-              <div class="skeleton-line short"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Pagination -->
-      <nav class="pagination-wrap mt-5">
-        <ul class="pagination justify-content-center" id="pagination"></ul>
-      </nav>
-    </section>
-    <!-- FOOTER -->
-
-    <footer class="main-footer">
-      <div class="footer-grid">
-        <div class="footer-col">
-          <h2 class="footer-logo">Exclusive</h2>
-          <h3>Subscribe</h3>
-          <p>Get 10% off your first order</p>
-          <div class="subscribe-input">
-            <input type="email" placeholder="Enter your email" />
-            <i class="fas fa-paper-plane"></i>
-          </div>
-        </div>
-
-        <div class="footer-col">
-          <h3>Support</h3>
-          <p>111 Bijoy sarani, Dhaka, Bangladesh.</p>
-          <br />
-          <p>exclusive@gmail.com</p>
-          <br />
-          <p>+88015-88888-9999</p>
-        </div>
-
-        <div class="footer-col">
-          <h3>Account</h3>
-          <ul>
-            <li>My Account</li>
-            <li>Login/Register</li>
-            <li>Cart</li>
-          </ul>
-        </div>
-
-        <div class="footer-col">
-          <h3>Quick Link</h3>
-          <ul>
-            <li>Privacy Policy</li>
-            <li>Terms Of Use</li>
-            <li>FAQ</li>
-          </ul>
-        </div>
-
-        <div class="footer-col">
-          <h3>Download App</h3>
-          <p class="promo-text">Save $3 with App New User Only</p>
-          <div class="app-download-area">
-            <img src="assets/images/qr-code.jpg" alt="QR" class="qr-code" />
-            <div class="store-imgs">
-              <img src="assets/images/google-play.png" alt="Google Play" />
-              <img src="assets/images/app-store.png" alt="App Store" />
-            </div>
-          </div>
-          <div class="social-links">
-            <i class="fab fa-facebook-f"></i>
-            <i class="fab fa-twitter"></i>
-            <i class="fab fa-instagram"></i>
-            <i class="fab fa-linkedin-in"></i>
-          </div>
-        </div>
-      </div>
-    </footer>
-    <!-- JS -->
-    <script src="assets/js/products.js"></script>
-    <script src="assets/js/cart.js"></script>
-  </body>
+		<script src="./assets/js/bootstrap.bundle.min.js"></script>
+		<script src="./assets/js/products.js"></script>
+		<script src="./assets/js/cart.js"></script>
+	</body>
 </html>

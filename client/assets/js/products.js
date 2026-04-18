@@ -6,10 +6,47 @@ let filteredProducts = [];
 let currentPage = 1;
 let totalPages = 1;
 
+const searchInputEl = document.getElementById("searchInput");
+const searchBtnEl = document.getElementById("searchBtn");
+const mainNavEl = document.getElementById("mainNav");
+const mobileMenuBtnEl = document.getElementById("mobileMenuBtn");
+
 document.addEventListener("DOMContentLoaded", () => {
+  addPageEventHandlers();
   loadProducts(currentPage);
   updateCartCount();
 });
+
+function addPageEventHandlers() {
+  if (mobileMenuBtnEl && mainNavEl) {
+    mobileMenuBtnEl.addEventListener("click", () => {
+      mainNavEl.classList.toggle("show");
+    });
+  }
+
+  if (searchBtnEl && searchInputEl) {
+    searchBtnEl.addEventListener("click", handleSearch);
+    searchInputEl.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        handleSearch();
+      }
+    });
+  }
+}
+
+function handleSearch() {
+  const query = searchInputEl?.value.trim().toLowerCase() || "";
+
+  filteredProducts = query
+    ? allProducts.filter((product) =>
+        product.name.toLowerCase().includes(query),
+      )
+    : [...allProducts];
+
+  currentPage = 1;
+  renderProducts();
+  renderPagination();
+}
 
 /* =========================
    LOAD PRODUCTS
@@ -225,10 +262,11 @@ function updateCartCount() {
 
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-  const cartCountEl = document.querySelector(".cart-count");
+  const cartCountEl = document.querySelector(".cart-count, #cartCount");
 
   if (cartCountEl) {
-    cartCountEl.textContent = cart.length;
+    const count = cart.reduce((total, item) => total + Number(item.qty || 0), 0);
+    cartCountEl.textContent = count;
   }
 
 }

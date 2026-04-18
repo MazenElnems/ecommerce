@@ -3,20 +3,20 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Log In</title>
-		<link rel="stylesheet" href="./assets/css/base.css" />
-		<link rel="stylesheet" href="./assets/css/login.css" />
-		<link rel="stylesheet" href="./assets/css/style.css" />
+		<title>Log In - Exclusive</title>
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
-			href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+			href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
 			rel="stylesheet"
 		/>
 		<link
 			rel="stylesheet"
-			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
 		/>
+		<link rel="stylesheet" href="./assets/css/base.css" />
+		<link rel="stylesheet" href="./assets/css/login.css" />
+		<link rel="stylesheet" href="./assets/css/style.css" />
 	</head>
 
 	<body class="login-page">
@@ -24,7 +24,7 @@
 			<div class="container top-bar-inner">
 				<p>
 					Summer Sale For All Swim Suits And Free Express Delivery -
-					OFF 50%! <a href="#">ShopNow</a>
+					OFF 50%! <a href="./index.html">ShopNow</a>
 				</p>
 				<select id="languageSelect" aria-label="Language">
 					<option>English</option>
@@ -52,19 +52,25 @@
 				<div class="header-actions">
 					<div class="search-box">
 						<input
+							id="searchInput"
 							type="text"
 							placeholder="What are you looking for?"
 						/>
-						<button aria-label="Search">
+						<button id="searchBtn" aria-label="Search">
 							<i class="fa-solid fa-magnifying-glass"></i>
 						</button>
 					</div>
 					<button class="icon-btn" aria-label="Wishlist">
 						<i class="fa-regular fa-heart"></i>
 					</button>
-					<a class="icon-btn" aria-label="Cart" href="./cart.html"
-						><i class="fa-solid fa-cart-shopping"></i
-					></a>
+					<a
+						class="icon-btn cart-icon-wrapper"
+						aria-label="Cart"
+						href="./cart.html"
+					>
+						<i class="fa-solid fa-cart-shopping"></i>
+						<span class="cart-count-badge" id="cartCount">0</span>
+					</a>
 					<a class="auth-btn" href="./login.html">Login</a>
 				</div>
 			</div>
@@ -143,6 +149,8 @@
 			</div>
 		</footer>
 
+		<script src="./assets/js/main.js"></script>
+		<script src="./assets/js/cart.js"></script>
 		<script src="./assets/js/login.js"></script>
 	</body>
 </html>
